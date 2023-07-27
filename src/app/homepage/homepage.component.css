@@ -1,0 +1,83 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+  }
+  
+  .homepage-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background:  /* linear-gradient(135deg, #ff6b6b, #ff8e53), */ url('src/assets/images/homepage-background2.jpg');
+    background-size: cover;
+    color: #fff5;
+    padding: 20px;
+  }
+  
+  .left-content {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .right-content {
+    text-align: center;
+  }
+  
+  h1 {
+    color: white;
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+  }
+  
+  p {
+    color:darkorange;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+  }
+  
+  .login-link {
+    display: block;
+    color: #fff;
+    background-color: #333;
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+  }
+  
+  /* Media queries for responsiveness */
+  @media screen and (min-width: 768px) {
+    .homepage-container {
+      flex-direction: row;
+      padding: 40px;
+    }
+  
+    .left-content {
+      margin-bottom: 0;
+      flex: 1;
+      padding-right: 20px;
+    }
+  
+    .right-content {
+      flex: 1;
+      text-align: right;
+      padding-left: 20px;
+    }
+  
+    h1 {
+      font-size: 3rem;
+    }
+  
+    p {
+      font-size: 1.5rem;
+    }
+  
+    .login-link {
+      display: inline-block;
+      margin-right: 10px;
+    }
+  }
+  
