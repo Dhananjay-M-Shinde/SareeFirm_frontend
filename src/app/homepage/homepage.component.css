@@ -22,6 +22,7 @@ body {
   }
   
   .right-content {
+    color: cyan;
     text-align: center;
   }
   
@@ -39,7 +40,7 @@ body {
   
   .login-link {
     display: block;
-    color: #fff;
+    color: lightyellow;
     background-color: #333;
     padding: 10px 20px;
     margin-bottom: 10px;
