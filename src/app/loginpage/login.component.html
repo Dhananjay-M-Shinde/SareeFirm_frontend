@@ -1,26 +1,34 @@
-<h1>hi it login page</h1>
-<div class="container">
-    <h2>Login Form</h2>
-    <form [formGroup]="loginForm" (ngSubmit)="login()">
-      <div class="form-group">
-        <label for="email">Email:</label>
-        <input type="email" id="email" formControlName="Email" class="form-control" placeholder="Enter your email">
-        <div *ngIf="loginForm.get('Email')?.invalid && (loginForm.get('Email')?.dirty || loginForm.get('Email')?.touched)" class="error-message">
-          <p *ngIf="loginForm.get('Email')?.errors?.['required']">Email is required.</p>
-          <p *ngIf="loginForm.get('Email')?.errors?.['Email']">Please enter a valid email address.</p>
-        </div>              
-      </div>
-  
-      <div class="form-group">
-        <label for="Password">Password:</label>
-        <input type="password" id="password" formControlName="Password" class="form-control" placeholder="Enter your password">
-        <div *ngIf="loginForm.get('Password')?.invalid && (loginForm.get('Password')?.dirty || loginForm.get('password')?.touched)" class="error-message">
-          <p *ngIf="loginForm.get('Password')?.errors?.['required']">Password is required.</p>
-          <p *ngIf="loginForm.get('Password')?.errors?.['minlength']">Password must be at least 6 characters long.</p>
+<div class="login-container">
+  <mat-card class="login-card">
+    <div class="profile-icon">
+      <mat-icon class="large-icon">account_circle</mat-icon>
+    </div>
+    <mat-card-title class="login-title">Login</mat-card-title>
+      <!-- Form fields... -->
+      <form [formGroup]="loginForm" (ngSubmit)="login()">
+        <div class="form-group">
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput type="email" formControlName="Email" placeholder="Enter your email">
+            <div *ngIf="loginForm.get('Email')?.invalid && (loginForm.get('Email')?.dirty || loginForm.get('Email')?.touched)" class="error-message">
+              <mat-error *ngIf="loginForm.get('Email')?.hasError('required')">Email is required</mat-error>
+              <mat-error *ngIf="loginForm.get('Email')?.hasError('email')">Please enter a valid email address</mat-error>
+            </div>
+          </mat-form-field>
         </div>
-      </div>
   
-      <button type="submit" [disabled]="loginForm.invalid">Login</button>
-    </form>
-  </div>
-  
+        <div class="form-group">
+          <mat-form-field appearance="outline">
+            <mat-label>Password</mat-label>
+            <input matInput type="password" formControlName="Password" placeholder="Enter your password">
+            <div *ngIf="loginForm.get('Password')?.invalid && (loginForm.get('Password')?.dirty || loginForm.get('Password')?.touched)" class="error-message">
+              <mat-error *ngIf="loginForm.get('Password')?.hasError('required')">Password is required</mat-error>
+              <mat-error *ngIf="loginForm.get('Password')?.hasError('minlength')">Password should be 6 or more characters</mat-error>
+            </div>
+          </mat-form-field>
+        </div>
+        <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid">Login</button>
+      </form>
+  </mat-card>
+</div>
+

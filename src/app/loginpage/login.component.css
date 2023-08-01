@@ -1,0 +1,77 @@
+/* login.component.css */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #f6f6f6, #ffffff); /* Subtle gradient for the page background */
+  }
+  
+  .login-card {
+    max-width: 500px;
+    padding: 40px;
+    border-radius: 20px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add box-shadow for depth */
+    background: linear-gradient(135deg, #f9f9f9, #ffffff); /* Subtle gradient for the card background */
+    text-align: center; /* Center the content horizontally */
+  }
+  
+  .profile-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 256px; /* Increase the icon size */
+    color: #007bff;
+    margin-bottom: 20px;
+  }
+
+  
+  
+  .login-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  /* Customize the form elements */
+  mat-form-field {
+    width: 100%;
+  }
+  
+  mat-label {
+    color: #666;
+    font-weight: bold;
+  }
+  
+  mat-input-container {
+    background-color: #f9f9f9; /* Custom background color for input container */
+    border-radius: 8px; /* Rounded corners for input container */
+  }
+  
+  mat-error {
+    color: #e53935; /* Custom error message color */
+    font-size: 14px;
+    font-weight: bold;
+  }
+  
+  button {
+    width: 100%;
+    background-color: #007bff;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 8px; /* Rounded corners for the button */
+    padding: 10px 20px;
+    transition: background-color 0.3s ease; /* Add transition for a smooth hover effect */
+  }
+  
+  button:hover {
+    background-color: #0056b3; /* Darker color on hover */
+  }
+  
+  /* Media queries for responsiveness */
+  @media screen and (min-width: 768px) {
+    .login-card {
+      max-width: 600px;
+    }
+  }
+  
