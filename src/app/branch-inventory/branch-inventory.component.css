@@ -1,0 +1,164 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 100%;
+  background: #0c111b;
+  position: relative;
+  font-family: "Roboto", sans-serif;
+}
+
+.card-container-fluid {
+  white-space: nowrap; /* Prevent cards from wrapping to the next line */
+  overflow-x: auto; /* Add horizontal scrolling for overflow */
+}
+
+.card-container-fluid::-webkit-scrollbar {
+  display: none;
+}
+
+.card {
+  display: inline-block; /* Display cards side by side */
+  width: 250px; /* Set the width of each card */
+  height: 400px; /* Set the height of each card */
+  border-radius: 5px;
+  overflow: hidden;
+  margin-right: 10px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  background-color: #fff;
+  vertical-align: top; /* Align the cards to the top of the container */
+}
+
+.card-img {
+  width: 100%;
+  height: 50%; /* Set the height of the image to 50% to make it half of the card */
+  object-fit: cover;
+}
+
+.card:hover{
+  transform: scale(1.1);
+}
+
+.card-body {
+  line-height: 2px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  line-height: 1;
+}
+
+.common-details {
+  margin-bottom: 20px;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #f2f2f2;
+}
+
+/* Style the "Add to cart" and "Out of stock" buttons */
+.card-body .btn {
+  margin-top: auto; /* Push the button to the bottom of the card */
+  padding: 8px 15px;
+  border-radius: 5px;
+  font-size: 14px;
+  text-decoration: none;
+  color: #fff;
+  /* background-color: #007bff; */
+  transition: background-color 0.3s ease-in-out;
+}
+
+.card-body h4 {
+  margin: 3px; /* Remove margin from all h4 elements within .card-body */
+}
+
+.card-body .highlight {
+  font-weight: bold; /* Highlighted text with bold font */
+  color: #161717; /* Highlighted text color */
+}
+
+.card-body .btn:hover {
+  background-color: #0056b3;
+}
+
+/* Hide scrollbar for the card container */
+.card-container-fluid::-webkit-scrollbar {
+  display: none;
+}
+
+.color-circle {
+  width: 15px;
+  height: 15px;
+  /* border-radius: 50%; */
+  display: inline-block;
+  margin-left: 40%;
+  outline: black;
+  border: black;
+}
+
+/* Custom styles for the modal */
+.modal-dialog {
+  max-width: 400px; /* Adjust the width as needed */
+  margin: 0 auto; /* Set margin auto to center the modal horizontally */
+  transition: transform 0.3s; /* Add this transition property */
+  transform: translate(0, -50px); /* Set initial transform to move the modal off the screen */
+}
+
+.modal-content {
+  border-radius: 8px;
+}
+
+.modal-header {
+  background-color: #007bff;
+  color: white;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.modal-title {
+  font-weight: bold;
+  align-items: center;
+  justify-content: center;
+}
+
+#title{
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+}
+
+.modal-body {
+  padding: 20px;
+}
+
+.modal-footer {
+  border-top: none;
+}
+
+/* Center the modal vertically */
+.modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0; /* Set initial opacity to 0 to hide the modal */
+  pointer-events: none; /* Disable pointer events to make it inaccessible */
+}
+
+/* Show the modal when selectedVariant has a value */
+.modal.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Optional: Add animation to the modal */
+.modal.fade .modal-dialog {
+  transform: translate(0, -50px); /* Change the initial position during the fade-in animation */
+}
+
+.modal.fade.show .modal-dialog {
+  transform: translate(0, 0); /* Move to the center during the fade-in animation */
+}
+

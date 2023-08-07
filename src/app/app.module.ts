@@ -15,6 +15,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
+import { CarouselModule } from 'ngx-bootstrap/carousel';
+import { FormsModule } from '@angular/forms';
+// import { CarouselComponent } from './carousel/carousel.component';
+
 // import { MatIconModule } from '@angular/material/icon';
 
 
@@ -36,7 +40,9 @@ import { MatCardModule } from '@angular/material/card';
     MatInputModule,
     MatButtonModule,
     MatIconModule,
-    MatCardModule
+    MatCardModule,
+    CarouselModule.forRoot(),
+    FormsModule
   ],
   providers: [UserDataService],
   bootstrap: [AppComponent]

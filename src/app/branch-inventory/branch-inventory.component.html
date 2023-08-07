@@ -1,1 +1,84 @@
-<p>branch-inventory works!</p>
+<div *ngFor="let product of productData">
+  <div class="common-details">
+    <h2 style="color: chocolate;">{{ product.Product_name }}</h2>
+    <p style="color: darkgreen;">{{ product.Description }}</p>
+    <p>Fabric: {{ product.Fabric }}</p>
+    <p>Price Range: {{ product.Price_range }}</p>
+  </div>
+  <div class="movies-list">
+    <div class="carousel-container">
+      <div class="carousel-inner">
+        <div class="card" *ngFor="let variant of product.Varients">
+          <img src="../assets/images/poster 14.jpg" class="card-img" alt="saree photo">
+          <div class="card-body">
+            <!-- ... -->
+              <h4 class="card-text" [ngStyle]="{ color: variant.Color}" style="font-weight: bolder; font-size: larger;"> <span class="highlight">Color:</span>  {{ variant.Color }} <span [ngStyle]="{ 'background-color': variant.Color }" class="color-circle"></span></h4>
+              <h4 class="card-text"><span class="highlight">Design:</span> {{ variant.Design }}</h4>
+              <h4 class="card-text"><span class="highlight">Qty-Available:</span> {{ variant.Quantity_Available }}</h4>
+              <h4 class="card-text"><span class="highlight">Price:</span> {{ variant.Price }}</h4>
+              <!-- ... -->
+            <div class="d-flex justify-content-between align-items-center">
+              <a class="btn btn-primary" (click)="addToCart(product.Product_name, product.Product_Id, variant.Color, variant.Price)">Add to cart</a>
+              <a href="#" class="btn btn-danger">Out of stock</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Rest of the modal content (same as before) -->
+  <!-- <h1>this is popup</h1> -->
+
+<!-- Modal for addToCart form -->
+<div class="modal" tabindex="-1" [class.show]="showModal" [class.d-block]="showModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="title">Add to Cart</h5>
+        <button type="button" class="close" (click)="closeModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label for="productId">Product ID</label>
+            <input type="text" class="form-control" id="productId" name="productId" [(ngModel)]="productId" readonly>
+          </div>
+          <div class="form-group">
+            <label for="productName">Product Name</label>
+            <input type="text" class="form-control" id="productName" name="productName" [(ngModel)]="productName" readonly>
+          </div>
+          <div class="form-group">
+            <label for="color">Color</label>
+            <input type="text" class="form-control" id="color" name="color" [(ngModel)]="color" readonly>
+          </div>
+          <div class="form-group">
+            <label for="quantity">Quantity</label>
+            <input type="number" class="form-control" id="quantity" name="quantity" [(ngModel)]="quantity" required min="1">
+          </div>
+          <div class="form-group">
+            <label for="totalAmount">Total Amount</label>
+            <input type="text" class="form-control" id="totalAmount" name="totalAmount" [(ngModel)]="price*quantity" readonly>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
+            <button type="submit" class="btn btn-primary" [disabled]="!quantity">Add to Cart</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- // model popUp form for cart implementation -->
+
+<!-- Your existing HTML content here -->
+
+<!-- Modal for addToCart form -->
+
