@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { InventoryService } from '../services/inventory.service';
 import { CartService } from '../services/cart.service';
+import { Route, Router } from '@angular/router';
 
 
 @Component({
@@ -29,7 +30,7 @@ export class BranchInventoryComponent implements OnInit {
   totalAmount:number = 0;
   price:number = 0;
 
-  constructor(private inventory: InventoryService, private cartService: CartService) {}
+  constructor(private inventory: InventoryService, private cartService: CartService, private router:Router) {}
 
   ngOnInit() {
     this.getInventory();
@@ -96,4 +97,7 @@ export class BranchInventoryComponent implements OnInit {
     this.quantity = 1; // Reset the quantity to 1
   }
   
+  ToCart(){
+    this.router.navigate(['/CartComponent']);
+  }
 }

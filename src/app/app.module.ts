@@ -17,6 +17,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { FormsModule } from '@angular/forms';
+import { CartComponent } from './cart/cart.component';
 // import { CarouselComponent } from './carousel/carousel.component';
 
 // import { MatIconModule } from '@angular/material/icon';
@@ -28,7 +29,8 @@ import { FormsModule } from '@angular/forms';
     AppComponent,
     HomepageComponent,
     LoginComponent,
-    BranchInventoryComponent
+    BranchInventoryComponent,
+    CartComponent
   ],
   imports: [
     BrowserModule,
