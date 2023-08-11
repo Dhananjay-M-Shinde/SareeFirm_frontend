@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -5,16 +6,19 @@ import { Injectable } from '@angular/core';
 })
 export class CartService {
 
+  private apiUrl = 'http://localhost:3000';
   productCart: any[] = [];
+  productInCart:number = 0
 
-  constructor() { }
+  constructor(private http:HttpClient) { }
 
   addToCart(productData:[]){
-    console.log("into productcart service");
-    
     this.productCart.push(productData);
-    console.log(this.productCart);
-    
+    this.productInCart+=1;
+  }
+
+  orderPlaced(order:any){
+    return this.http.post<any>(`${this.apiUrl}/order/orderPlaced`, order);
   }
 
 }

@@ -18,6 +18,8 @@ import { MatCardModule } from '@angular/material/card';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { FormsModule } from '@angular/forms';
 import { CartComponent } from './cart/cart.component';
+import { CartIconComponent } from './cart-icon/cart-icon.component';
+import { BranchesComponent } from './branches/branches.component';
 // import { CarouselComponent } from './carousel/carousel.component';
 
 // import { MatIconModule } from '@angular/material/icon';
@@ -30,7 +32,9 @@ import { CartComponent } from './cart/cart.component';
     HomepageComponent,
     LoginComponent,
     BranchInventoryComponent,
-    CartComponent
+    CartComponent,
+    CartIconComponent,
+    BranchesComponent
   ],
   imports: [
     BrowserModule,

@@ -1,1 +1,92 @@
-<p>cart works!</p>
+<div class="container">
+    <div class="row">
+      <div class="col">
+        <!-- Customer Data Form -->
+        <div class="login-container">
+          <!-- ... Your customerData form HTML ... -->
+          <mat-card class="login-card">
+            <div class="profile-icon">
+              <mat-icon class="large-icon">account_circle</mat-icon>
+            </div>
+            <mat-card-title class="login-title">Customer Data</mat-card-title>
+              <!-- Form fields... -->
+              <form [formGroup]="customerData" (ngSubmit)="placeOrder()">
+                <div class="form-group">
+                  <mat-form-field appearance="outline">
+                    <mat-label>sales Id</mat-label>
+                    <input matInput type="number" formControlName="salesId" placeholder="Enter salesId">
+                    <div *ngIf="customerData.get('salesId')?.invalid && (customerData.get('salesId')?.dirty || customerData.get('salesId')?.touched)" class="error-message">
+                      <mat-error *ngIf="customerData.get('salesId')?.hasError('required')">salesId is required</mat-error> 
+                    </div>
+                  </mat-form-field>
+                </div>
+                <div class="form-group">
+                  <mat-form-field appearance="outline">
+                    <mat-label>customer Name</mat-label>
+                    <input matInput type="text" formControlName="customerName" placeholder="Enter your name">
+                    <div *ngIf="customerData.get('customerName')?.invalid && (customerData.get('customerName')?.dirty || customerData.get('customerName')?.touched)" class="error-message">
+                      <mat-error *ngIf="customerData.get('customerName')?.hasError('required')">Password is required</mat-error>                  </div>
+                  </mat-form-field>
+                </div>
+                <div class="form-group">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Mobile</mat-label>
+                    <input matInput type="number" formControlName="customerMobile" placeholder="Enter your mobile">
+                    <div *ngIf="customerData.get('customerMobile')?.invalid && (customerData.get('customerMobile')?.dirty || customerData.get('customerMobile')?.touched)" class="error-message">
+                      <mat-error *ngIf="customerData.get('customerMobile')?.hasError('required')">mobile is required</mat-error> 
+                      <mat-error *ngIf="customerData.get('customerMobile')?.hasError('minlength')">mobile mobile should be of 10 digit</mat-error> 
+                      <mat-error *ngIf="customerData.get('customerMobile')?.hasError('maxlength')">mobile should be of 10 digit</mat-error> 
+                    </div>
+                  </mat-form-field>
+                </div>
+                <div class="form-group">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Date</mat-label>
+                    <input matInput type="date" formControlName="salesDate" [(ngModel)]="defaultDate">
+                    <div *ngIf="customerData.get('salesDate')?.invalid && (customerData.get('salesDate')?.dirty || customerData.get('salesDate')?.touched)" class="error-message">
+                      <mat-error *ngIf="customerData.get('salesDate')?.hasError('required')">date is required</mat-error>  
+                    </div>
+                  </mat-form-field>
+                </div>
+                <div>
+                    <button mat-raised-button color="primary" type="submit" [disabled]="customerData.invalid">Place Order</button>
+                </div>
+              </form>
+              <span *ngIf="successMsg" class="text text-success" style="font-size: larger;">{{ successMsg }}</span>
+              <span *ngIf="errorMsg" class="text-danger" style="font-size: larger;">{{ errorMsg }}</span>
+          </mat-card>
+        </div>
+      </div>
+      <div class="col">
+        <!-- Cart Table -->
+        <h2>Product Cart</h2>
+        <table class="table">
+          <!-- ... Your cart table HTML ... -->
+          <thead>
+            <tr>
+              <th>Product ID</th>
+              <th>Branch ID</th>
+              <th>Product Name</th>
+              <th>Color</th>
+              <th>Quantity</th>
+              <th>Total Amount</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let product of productCart; let i = index;">
+              <td>{{ product.productId }}</td>
+              <td>{{ product.branchId }}</td>
+              <td>{{ product.productName }}</td>
+              <td>{{ product.color }}</td>
+              <td>{{product.quantity}}</td>
+              <td>{{ product.totalAmount }}</td>
+              <td><button class="btn btn-danger" (click)="removeProduct(i)">Remove</button></td>
+            </tr>
+          </tbody>
+        </table>
+        <h2 style="font-weight: bolder; color:crimson;">total amount is <span>{{ totalAmount}}</span></h2>
+      </div>
+    </div>
+  </div>
+  

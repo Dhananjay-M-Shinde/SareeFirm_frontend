@@ -1,4 +1,16 @@
-<button (click)="ToCart()"> cart </button>
+<div class="navbar">
+  <a class="navbar-brand" routerLink="/">SareeFirm</a>
+  <div class="navbar-search">
+    <input type="text" class="search-input" placeholder="Search...">
+    <button class="btn btn-primary">Search</button>
+  </div>
+  <div class="cart-icon">
+    <i class="fas fa-shopping-cart" routerLink="/CartComponent"></i>
+    <span class="cart-count" [innerText]="cartItemCount"></span>
+  </div>
+</div> 
+
+
 <div *ngFor="let product of productData">
   <div class="common-details">
     <h2 style="color: chocolate;">{{ product.Product_name }}</h2>
@@ -12,12 +24,11 @@
         <div class="card" *ngFor="let variant of product.Varients">
           <img src="../assets/images/poster 14.jpg" class="card-img" alt="saree photo">
           <div class="card-body">
-            <!-- ... -->
+          
               <h4 class="card-text" [ngStyle]="{ color: variant.Color}" style="font-weight: bolder; font-size: larger;"> <span class="highlight">Color:</span>  {{ variant.Color }} <span [ngStyle]="{ 'background-color': variant.Color }" class="color-circle"></span></h4>
               <h4 class="card-text"><span class="highlight">Design:</span> {{ variant.Design }}</h4>
               <h4 class="card-text"><span class="highlight">Qty-Available:</span> {{ variant.Quantity_Available }}</h4>
               <h4 class="card-text"><span class="highlight">Price:</span> {{ variant.Price }}</h4>
-              <!-- ... -->
             <div class="d-flex justify-content-between align-items-center">
               <a class="btn btn-primary" (click)="addToCart(product.Product_name, product.Product_Id, variant.Color, variant.Price)">Add to cart</a>
               <a href="#" class="btn btn-danger">Out of stock</a>
@@ -75,11 +86,3 @@
     </div>
   </div>
 </div>
-
-
-<!-- // model popUp form for cart implementation -->
-
-<!-- Your existing HTML content here -->
-
-<!-- Modal for addToCart form -->
-

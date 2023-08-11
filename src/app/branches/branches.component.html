@@ -1,0 +1,93 @@
+<div class="navbar">
+    <a class="navbar-brand" routerLink="/">SareeFirm</a>
+    <div class="navbar-search">
+      
+    </div>
+    <div class="cart-icon">
+      <!-- <i class="fas fa-shopping-cart" routerLink="/CartComponent"></i> -->
+      <!-- <span class="cart-count">addNewBranch</span> -->
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#registrationModal" (click)="registerModel()">
+        Add New Branch
+      </button>
+    </div>
+  </div>
+
+<div class="container">
+    <div class="row">
+      <div class="col-md-4" *ngFor="let branch of branchData">
+        <div class="card mb-4">
+          <div class="card-body">
+            <h5 class="card-title">{{branch.Branch_name}}</h5> 
+            <div class="card-text">
+              <p><i class="fas fa-user"></i>{{branch.Owner_name}}</p>
+              <p><i class="fas fa-mobile-alt"></i> {{  branch.Contact }} </p>   
+              <p><i class="fas fa-map-marker-alt"></i> {{ branch.Address }}</p>  
+              <p><i class="fas fa-envelope"></i> {{ branch.Email }} </p> 
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Button to trigger the modal -->
+<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#registrationModal">
+    Open Registration Form
+  </button> -->
+  
+  <!-- Modal -->
+  <div class="modal fade" id="registrationModal" tabindex="-1" role="dialog" aria-labelledby="registrationModalLabel" aria-hidden="true"  [class.show]="showModal" [class.d-block]="showModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="registrationModalLabel">Registration Form</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="registrationForm">
+            <!-- Form fields as before -->
+            <div class="registration-form">
+                <h2>Registration Form</h2>
+                <form [formGroup]="registrationForm">
+                  <label for="branchId">Branch Id</label>
+                  <input type="number" id="branchId" formControlName="branchId" required>
+
+                  <label for="branchName">Branch Name</label>
+                  <input type="text" id="branchName" formControlName="BranchName" required>
+              
+                  <label for="ownerName">Owner Name</label>
+                  <input type="text" id="ownerName" formControlName="ownerName" required>
+              
+                  <label for="contact">Contact</label>
+                  <input type="text" id="contact" formControlName="contact" required>
+              
+                  <label for="address">Address</label>
+                  <input type="text" id="address" formControlName="address" required>
+              
+                  <label for="email">Email</label>
+                  <input type="email" id="email" formControlName="email" required>
+              
+                  <label for="password">Password</label>
+                  <input type="password" id="password" formControlName="password" required>
+              
+                  <button (click)="sendOtp()" [disabled]="otpSent">Send OTP</button>
+                  <a class="text" [ngClass]="{'disabled': resend}" (click)="sendOtp()">Resend?</a>
+                  <div *ngIf="showOtp">
+                    <label for="otp">Enter OTP</label>
+                    <input type="text" id="otp" formControlName="otp" required (ngModelChange)="otpValid()">
+                  </div>
+              
+                  <button type="submit" [disabled]="registrationForm.invalid || !otpEntered" (click)="register()">Register</button>
+                </form>
+              </div>
+              
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  

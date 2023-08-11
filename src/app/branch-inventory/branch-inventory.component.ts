@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, ChangeDetectorRef, NgZone } from '@angular/core';
 import { InventoryService } from '../services/inventory.service';
 import { CartService } from '../services/cart.service';
 import { Route, Router } from '@angular/router';
@@ -30,7 +30,9 @@ export class BranchInventoryComponent implements OnInit {
   totalAmount:number = 0;
   price:number = 0;
 
-  constructor(private inventory: InventoryService, private cartService: CartService, private router:Router) {}
+  cartItemCount: number = 0; // Initialize cart item count
+
+  constructor(private inventory: InventoryService, private cartService: CartService, private router:Router, private cdr:ChangeDetectorRef, private ngZone:NgZone) {}
 
   ngOnInit() {
     this.getInventory();
@@ -43,14 +45,6 @@ export class BranchInventoryComponent implements OnInit {
     this.inventory.getInventoryByid(1).subscribe(
       (response) => {
         this.productData = response;
-        // console.log(this.productData);
-
-        this.productData.forEach((product) => {
-          // console.log(product);
-          // console.log(product.Branch_Id, product.Description, product.Varients[0].Color);
-        });
-
-        // this.initializeCarousel(); // Initialize carousel after data is fetched
       },
       (error) => {
         console.log('Error while fetching data');
@@ -59,8 +53,6 @@ export class BranchInventoryComponent implements OnInit {
   }
 
   addToCart(name:string, id:number, color:string, price:number): void {
-    // this.productData = product;
-    console.log(name, id, color, price);
     this.productId = id;
     this.productName = name;
     this.color = color;
@@ -83,12 +75,12 @@ export class BranchInventoryComponent implements OnInit {
 
     this.cartService.addToCart(this.productDatas);
     console.log("added to productcart services");
-    
+    this.cartItemCount = this.cartService.productInCart;
+
+    console.log(this.cartItemCount);
 
     this.showModal = false;
     this.quantity = 1; // Reset the quantity to 1
-    
-    console.log("form submitted");
     
   }
 
