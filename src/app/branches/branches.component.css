@@ -60,9 +60,13 @@
     font-weight: bold;
   }
 
-  h5{
+  h4{
     /* margin: auto; */
     color: darkblue;
+  }
+
+  .modal-header{
+    max-height: 7%;
   }
 
   .registration-form {
@@ -101,4 +105,39 @@
     background-color: #ccc;
     cursor: not-allowed;
   }
+ 
+  .small-button {
+    margin-top: 6px;
+    font-size: 14px; /* Adjust the font size as needed */
+    padding: 6px 12px; /* Adjust the padding as needed */
+  }
+
+  /* Apply the blur effect to the main container when the modal is open */
+.modal-open .main-container {
+  position: relative;
+}
+
+/* Modern browsers that support backdrop-filter */
+.modal-open .main-container::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+  backdrop-filter: blur(5px); /* Apply the blur effect */
+}
+
+/* Fallback for older browsers */
+.modal-open .main-container::before {
+  background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+}
+
+/* Adjust modal position and z-index */
+.modal-open .modal {
+  position: fixed;
+  z-index: 1050;
+}
+
   

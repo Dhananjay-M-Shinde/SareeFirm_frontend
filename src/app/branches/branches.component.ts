@@ -14,11 +14,17 @@ export class BranchesComponent {
   showOtp: boolean = false;
   otpEntered: boolean = false;
   showModal:boolean = false;
+  showUpdateModal: boolean = false;
   otpSent:boolean = false;
   resend:boolean = true;
   successMsg = '';
   errorMsg = '';
+  successmsg = '';
+  errormsg = '';
   newBranch: any = {};
+  updateDetails: any = {};
+  updateDetailsForm!: FormGroup;
+  BranchId: number | undefined;
 
   constructor(private branchService: BranchDataService, private formBuilder:FormBuilder){}
 
@@ -32,7 +38,17 @@ export class BranchesComponent {
       address: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
-      otp: ['']})
+      otp: ['']
+    });
+
+    this.updateDetailsForm = this.formBuilder.group({
+
+      Branch_name: ['', Validators.required],
+      Owner_name: ['', Validators.required],
+      Contact: ['', Validators.required],
+      Address: ['', Validators.required],
+      Email: ['', Validators.required]
+    })
   }
 
   getBranchData(){
@@ -54,7 +70,7 @@ export class BranchesComponent {
   sendOtp() {
     this.newBranch = {
       Branch_Id: this.registrationForm.get('branchId')?.value,
-      Branch_name: this.registrationForm.get('BranchName')?.value,
+      Branch_name: this.registrationForm.get('branchName')?.value,
       Owner_name: this.registrationForm.get('ownerName')?.value,
       Contact: this.registrationForm.get('contact')?.value,
       Address: this.registrationForm.get('address')?.value,
@@ -62,16 +78,17 @@ export class BranchesComponent {
       Password: this.registrationForm.get('password')?.value
     };
 
-    // Simulate OTP sending logic here
-    // let otp = this.registrationForm.get('otp')?.value;
-    this.otpSent = true;
-    this.resend = false;
-    this.showOtp = true;
     this.branchService.sendOtp(this.newBranch).subscribe((Response) =>{
       console.log("otp sent to backend");
     }, (error) =>{
+      console.log(error.message);
+      
       console.log("otp can't send");
     })
+
+    this.otpSent = true;
+    this.resend = false;
+    this.showOtp = true;
   }
 
   onSubmit() {
@@ -101,13 +118,14 @@ export class BranchesComponent {
 
   closeModal(): void {
     this.showModal = false;
+    this.showUpdateModal = false;
   }
 
   register(){
 
     this.newBranch = {
       Branch_Id: this.registrationForm.get('branchId')?.value,
-      Branch_name: this.registrationForm.get('BranchName')?.value,
+      Branch_name: this.registrationForm.get('branchName')?.value,
       Owner_name: this.registrationForm.get('ownerName')?.value,
       Contact: this.registrationForm.get('contact')?.value,
       Address: this.registrationForm.get('address')?.value,
@@ -129,6 +147,36 @@ export class BranchesComponent {
     }, (error) =>{
       this.errorMsg = "Registration unsuccessful";
       this.successMsg = '';
+    })
+  }
+
+  getBranchDetails(branchId: number, branchName: string, ownerName: string, contact: number, address: string, email: string){
+    this.showUpdateModal = true;
+    this.BranchId = branchId;
+    this.updateDetailsForm.patchValue({
+      Branch_name: branchName,
+      Owner_name:ownerName,
+      Contact:contact,
+      Address:address,
+      Email:email
+    })
+    console.log(this.updateDetailsForm.value);
+    
+  }
+
+  updateBranchDetails(){
+    this.branchService.updateBranchDetails(this.BranchId, this.updateDetailsForm.value).subscribe((response) =>{
+      this.successmsg = "branch details updated successfully";
+      setTimeout(() => {
+        this.showUpdateModal = false;
+      }, 3000);
+      this.getBranchData();
+      setTimeout(() => {
+        this.successMsg = this.successmsg = '';
+        this.errorMsg = this.errormsg = ''
+      }, 4000);
+    }, (error) =>{
+      this.errormsg = "details not updated"
     })
   }
 

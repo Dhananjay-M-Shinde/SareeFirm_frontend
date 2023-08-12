@@ -1,18 +1,16 @@
-<div class="navbar">
+<div class="navbar main-container">
     <a class="navbar-brand" routerLink="/">SareeFirm</a>
     <div class="navbar-search">
       
     </div>
     <div class="cart-icon">
-      <!-- <i class="fas fa-shopping-cart" routerLink="/CartComponent"></i> -->
-      <!-- <span class="cart-count">addNewBranch</span> -->
       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#registrationModal" (click)="registerModel()">
         Add New Branch
       </button>
     </div>
   </div>
 
-<div class="container">
+<div class="container main-container">
     <div class="row">
       <div class="col-md-4" *ngFor="let branch of branchData">
         <div class="card mb-4">
@@ -24,24 +22,22 @@
               <p><i class="fas fa-map-marker-alt"></i> {{ branch.Address }}</p>  
               <p><i class="fas fa-envelope"></i> {{ branch.Email }} </p> 
             </div>
+            <div class="d-flex justify-content-start">
+                <button class="btn btn-sm btn-primary small-button" (click)="getBranchDetails(branch.Branch_Id, branch.Branch_name, branch.Owner_name, branch.Contact, branch.Address, branch.Email)">Update Details</button>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-
-  <!-- Button to trigger the modal -->
-<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#registrationModal">
-    Open Registration Form
-  </button> -->
   
-  <!-- Modal -->
+  <!-- Modal form for adding new branch-->
   <div class="modal fade" id="registrationModal" tabindex="-1" role="dialog" aria-labelledby="registrationModalLabel" aria-hidden="true"  [class.show]="showModal" [class.d-block]="showModal">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="registrationModalLabel">Registration Form</h5>
+          <h4 class="modal-title" id="registrationModalLabel">Registration Form</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModal()">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -56,7 +52,7 @@
                   <input type="number" id="branchId" formControlName="branchId" required>
 
                   <label for="branchName">Branch Name</label>
-                  <input type="text" id="branchName" formControlName="BranchName" required>
+                  <input type="text" id="branchName" formControlName="branchName" required>
               
                   <label for="ownerName">Owner Name</label>
                   <input type="text" id="ownerName" formControlName="ownerName" required>
@@ -82,6 +78,10 @@
               
                   <button type="submit" [disabled]="registrationForm.invalid || !otpEntered" (click)="register()">Register</button>
                 </form>
+                <div>
+                    <span *ngIf="errorMsg" class="text-danger">{{errorMsg}}</span>
+                    <span *ngIf="successMsg" class="text-success">{{successMsg}}</span>
+                </div>
               </div>
               
           </form>
@@ -89,5 +89,65 @@
       </div>
     </div>
   </div>
+
+<!-- Modal form for updating branch details-->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" [class.show]="showUpdateModal" [class.d-block]="showUpdateModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="exampleModalLabel">Branch Details</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="updateDetailsForm">
+          <div class="form-group">
+            <label for="Branch_name">Branch Name</label>
+            <input type="text" class="form-control" id="Branch_name" formControlName="Branch_name">
+            <div *ngIf="updateDetailsForm.get('Branch_name')?.hasError('required') && updateDetailsForm.get('Branch_name')?.touched" class="text-danger">
+              Branch Name is required.
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="Owner_name">Owner Name</label>
+            <input type="text" class="form-control" id="Owner_name" formControlName="Owner_name">
+            <div *ngIf="updateDetailsForm.get('Owner_name')?.hasError('required') && updateDetailsForm.get('Owner_name')?.touched" class="text-danger">
+              Owner Name is required.
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="Contact">Contact</label>
+            <input type="text" class="form-control" id="Contact" formControlName="Contact">
+            <div *ngIf="updateDetailsForm.get('Contact')?.hasError('required') && updateDetailsForm.get('Contact')?.touched" class="text-danger">
+              Contact is required.
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="Address">Address</label>
+            <input type="text" class="form-control" id="Address" formControlName="Address">
+            <div *ngIf="updateDetailsForm.get('Address')?.hasError('required') && updateDetailsForm.get('Address')?.touched" class="text-danger">
+                Address is required.
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="Email">Email</label>
+            <input type="text" class="form-control" id="Email" formControlName="Email">
+            <div *ngIf="updateDetailsForm.get('Email')?.hasError('required') && updateDetailsForm.get('Email')?.touched" class="text-danger">
+                Email is required.
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="d-flex justify-content-end">
+        <span *ngIf="successmsg" class="text-success mb-4" style="font-size: larger; font-weight: bold;">{{successmsg}}</span>
+        <span *ngIf="errormsg" class="text-danger mb-4" style="font-size: larger; font-weight: bold;">{{errormsg}}</span>
+        <button type="button" class="btn btn-sm btn-secondary mr-2" data-dismiss="modal" (click)="closeModal()" style="margin-right: 4px;">Close</button>
+        <button type="button" class="btn btn-sm btn-primary" (click)="updateBranchDetails()" [disabled]="!updateDetailsForm.valid">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+
   
   

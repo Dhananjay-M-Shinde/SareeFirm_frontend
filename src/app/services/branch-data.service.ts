@@ -18,12 +18,18 @@ export class BranchDataService {
   }
 
   sendOtp(newBranch:any){
+    console.log("into send otp service");
+    
     return this.http.post<any>(`${this.apiUrl}/branch/addNewBranch/SendOtp`, newBranch);
   }
 
   addNewBranch(otp:number, branchData:any){
-    console.log(branchData);
+    console.log("into branchData", branchData);
     return this.http.post<any>(`${this.apiUrl}/branch/addNewBranch/Register/${otp}`, branchData);
+  }
+
+  updateBranchDetails(branchId:any, details:any){
+    return this.http.put<any>(`${this.apiUrl}/branch/updateDetails/${branchId}`, details);
   }
 
 }
