@@ -52,14 +52,8 @@ export class BranchesComponent {
   }
 
   getBranchData(){
-    console.log("into .ts");
-    
     this.branchService.getBranchData().subscribe((response) =>{
-      console.log(response);
-      
       this.branchData = response;
-      console.log(this.branchData);
-      
     })
   }
 
@@ -169,12 +163,10 @@ export class BranchesComponent {
       this.successmsg = "branch details updated successfully";
       setTimeout(() => {
         this.showUpdateModal = false;
-      }, 3000);
-      this.getBranchData();
-      setTimeout(() => {
         this.successMsg = this.successmsg = '';
         this.errorMsg = this.errormsg = ''
-      }, 4000);
+      }, 3000);
+      this.getBranchData();
     }, (error) =>{
       this.errormsg = "details not updated"
     })

@@ -117,6 +117,10 @@
   position: relative;
 }
 
+.modal{
+  overflow:auto;
+}
+
 /* Modern browsers that support backdrop-filter */
 .modal-open .main-container::before {
   content: '';

@@ -31,22 +31,25 @@ export class LoginComponent {
 
   login() {
     if (this.loginForm.valid) {
-      // Handle the login logic here, e.g., call an authentication service
-      // For this example, we're simply logging the form value
-      
-      // console.log('Login Form Submitted:', this.loginForm.value);
-      console.log("into login");
-      
+     
     const dataToSend = this.loginForm.value;
+    const userType = this.dataService.userType;
     this.dataService.postData(dataToSend).subscribe(
       (response) => {
-        console.log("success");
+        console.log(userType);
+        const BranchId:number = response.data.Branch_Id;
         
         this.handleLoginResponse(response);
 
         console.log('Data sent successfully:', response);
-        if(response.status == 201){
-          this.router.navigate(['/branchInventory']);
+        if(response.status == 201 && userType == "BranchOwner"){
+          const token = response.data.token;
+          this.router.navigate(['/branchInventory', BranchId]);
+        }
+
+        if(userType == "MainOwner"){
+          console.log("into mainOwner");
+          this.router.navigate(['/branches']);
         }
         
       },

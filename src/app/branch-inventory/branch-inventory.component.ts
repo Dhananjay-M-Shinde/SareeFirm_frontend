@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild, ChangeDetectorRef, NgZone } from '@angular/core';
 import { InventoryService } from '../services/inventory.service';
 import { CartService } from '../services/cart.service';
-import { Route, Router } from '@angular/router';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 
 
 @Component({
@@ -21,7 +21,7 @@ export class BranchInventoryComponent implements OnInit {
   //       "color": "green",
   //       "quantity": 30,
   //       "totalAmount": 1700
-
+  BranchId:number | undefined;
   productId:number | undefined;
   productName:string | undefined;
   branchId:number | undefined;
@@ -32,17 +32,25 @@ export class BranchInventoryComponent implements OnInit {
 
   cartItemCount: number = 0; // Initialize cart item count
 
-  constructor(private inventory: InventoryService, private cartService: CartService, private router:Router, private cdr:ChangeDetectorRef, private ngZone:NgZone) {}
+  constructor(private inventory: InventoryService, private cartService: CartService, private router:Router, private cdr:ChangeDetectorRef, private route: ActivatedRoute) {}
 
   ngOnInit() {
-    this.getInventory();
+    this.route.paramMap.subscribe(params => {
+      const BranchIdStr = params.get('BranchId'); // Access the branchId parameter
+      if(BranchIdStr){
+        this.BranchId = +BranchIdStr;
+      }
+      console.log(this.BranchId);
+    });
+
+    this.getInventory(this.BranchId);
   }
 
   productData: any[] = [];
-  getInventory() {
+  getInventory(branchId:any) {
     let id = 0;
 
-    this.inventory.getInventoryByid(1).subscribe(
+    this.inventory.getInventoryByid(branchId).subscribe(
       (response) => {
         this.productData = response;
       },

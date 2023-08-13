@@ -56,7 +56,8 @@ body {
   margin-bottom: 20px;
   padding: 10px;
   border-radius: 5px;
-  background-color: #f2f2f2;
+  font-weight:bold ;
+  background-color: #c6e2f4;
 }
 
 /* Style the "Add to cart" and "Out of stock" buttons */
