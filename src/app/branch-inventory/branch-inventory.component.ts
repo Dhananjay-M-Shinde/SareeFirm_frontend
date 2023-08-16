@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild, ChangeDetectorRef, NgZone } f
 import { InventoryService } from '../services/inventory.service';
 import { CartService } from '../services/cart.service';
 import { ActivatedRoute, Route, Router } from '@angular/router';
+import { UserDataService } from '../services/user-data.service';
 
 
 @Component({
@@ -13,8 +14,11 @@ import { ActivatedRoute, Route, Router } from '@angular/router';
 export class BranchInventoryComponent implements OnInit {
 
   showModal: boolean = false;
+  showModalforupdate:boolean = false;
   productDatas: any = {}; // You can initialize it with empty object or set it when you receive data from the frontend
-  
+  userType:string | undefined;
+  updateProduct: any = {};
+
   // "productId": 2,
   //       "branchId": 1,
   //       "productName": "Silk Saree",
@@ -29,10 +33,12 @@ export class BranchInventoryComponent implements OnInit {
   quantity:number = 1;
   totalAmount:number = 0;
   price:number = 0;
+  addQuantity:number = 0;
+  changePriceTo:number = 0;
 
   cartItemCount: number = 0; // Initialize cart item count
 
-  constructor(private inventory: InventoryService, private cartService: CartService, private router:Router, private cdr:ChangeDetectorRef, private route: ActivatedRoute) {}
+  constructor(private inventory: InventoryService, private cartService: CartService, private router:Router, private route:ActivatedRoute, private userData:UserDataService) {}
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
@@ -44,6 +50,7 @@ export class BranchInventoryComponent implements OnInit {
     });
 
     this.getInventory(this.BranchId);
+    this.userType = this.userData.userType;
   }
 
   productData: any[] = [];
@@ -74,7 +81,7 @@ export class BranchInventoryComponent implements OnInit {
     // this.cartService.addToCart(this.productData, this.quantity);  do it later when you create cartService
     this.productDatas = {
       productId: this.productId,
-      branchId: 1,
+      branchId: this.BranchId,
       productName: this.productName,
       color: this.color,
       quantity: this.quantity,
@@ -94,10 +101,39 @@ export class BranchInventoryComponent implements OnInit {
 
   closeModal(): void {
     this.showModal = false;
+    this.showModalforupdate = false;
     this.quantity = 1; // Reset the quantity to 1
   }
   
   ToCart(){
     this.router.navigate(['/CartComponent']);
+  }
+
+  updateProducts(productId:number, color:string){
+    this.showModalforupdate = true;
+    this.color = color;
+    this.productId = productId;
+    this.branchId = this.userData.Branch_Id;
+  }
+
+  submitUpdateProduct(){
+    const Price = this.changePriceTo;
+    const quantity_Available = this.addQuantity;
+    
+    
+    this.updateProduct = {
+      price:Price,
+      quantity:quantity_Available
+    }
+    this.inventory.updateProduct(this.branchId, this.productId, this.color, this.updateProduct).subscribe((response) =>{
+      console.log("product updated succeesfully");
+    }, (error) =>{
+      console.log("product updation failed");
+    })
+
+    setTimeout(() => {
+      this.closeModal();
+      this.getInventory(this.BranchId);
+    }, 2000);
   }
 }

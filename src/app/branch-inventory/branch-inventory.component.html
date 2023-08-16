@@ -5,15 +5,21 @@
     <button class="btn btn-primary">Search</button>
   </div>
   <div class="cart-icon">
+    <button class="btn btn-primary" *ngIf="userType == 'MainOwner'">newProduct</button>
+  </div>
+  <div class="cart-icon" *ngIf="userType == 'BranchOwner'">
     <i class="fas fa-shopping-cart" routerLink="/CartComponent"></i>
     <span class="cart-count" [innerText]="cartItemCount"></span>
   </div>
-</div> 
+</div>
 
 
 <div *ngFor="let product of productData">
   <div class="common-details">
-    <h2 style="color: chocolate;">{{ product.Product_name }}</h2>
+    <div class="row">
+      <div class="col-md-6"><h2 style="color: chocolate;">{{ product.Product_name }}</h2></div>
+      <div class="col-md-6"><span><a href="#" class="btn btn-danger">Add New Varient</a></span></div>
+    </div>
     <p style="color: darkgreen;">{{ product.Description }}</p>
     <p>Fabric: {{ product.Fabric }}</p>
     <p>Price Range: {{ product.Price_range }}</p>
@@ -24,14 +30,21 @@
         <div class="card" *ngFor="let variant of product.Varients">
           <img src="../assets/images/poster 14.jpg" class="card-img" alt="saree photo">
           <div class="card-body">
-          
-              <h4 class="card-text" [ngStyle]="{ color: variant.Color}" style="font-weight: bolder; font-size: larger;"> <span class="highlight">Color:</span>  {{ variant.Color }} <span [ngStyle]="{ 'background-color': variant.Color }" class="color-circle"></span></h4>
-              <h4 class="card-text"><span class="highlight">Design:</span> {{ variant.Design }}</h4>
-              <h4 class="card-text"><span class="highlight">Qty-Available:</span> {{ variant.Quantity_Available }}</h4>
-              <h4 class="card-text"><span class="highlight">Price:</span> {{ variant.Price }}</h4>
-            <div class="d-flex justify-content-between align-items-center">
-              <a class="btn btn-primary" (click)="addToCart(product.Product_name, product.Product_Id, variant.Color, variant.Price)">Add to cart</a>
+
+            <h4 class="card-text" [ngStyle]="{ color: variant.Color}" style="font-weight: bolder; font-size: larger;">
+              <span class="highlight">Color:</span> {{ variant.Color }} <span
+                [ngStyle]="{ 'background-color': variant.Color }" class="color-circle"></span></h4>
+            <h4 class="card-text"><span class="highlight">Design:</span> {{ variant.Design }}</h4>
+            <h4 class="card-text"><span class="highlight">Qty-Available:</span> {{ variant.Quantity_Available }}</h4>
+            <h4 class="card-text"><span class="highlight">Price:</span> {{ variant.Price }}</h4>
+            <div class="d-flex justify-content-between align-items-center" *ngIf="userType == 'BranchOwner'">
+              <a class="btn btn-primary"
+                (click)="addToCart(product.Product_name, product.Product_Id, variant.Color, variant.Price)">Add to
+                cart</a>
               <a href="#" class="btn btn-danger">Out of stock</a>
+            </div>
+            <div class="d-flex justify-content-between align-items-center" *ngIf="userType == 'MainOwner'">
+              <a class="btn btn-primary" (click)="updateProducts(product.Product_Id, variant.Color)">Update Product</a>
             </div>
           </div>
         </div>
@@ -43,7 +56,7 @@
 
 
 <!-- Rest of the modal content (same as before) -->
-  <!-- <h1>this is popup</h1> -->
+<!-- <h1>this is popup</h1> -->
 
 <!-- Modal for addToCart form -->
 <div class="modal" tabindex="-1" [class.show]="showModal" [class.d-block]="showModal">
@@ -63,7 +76,8 @@
           </div>
           <div class="form-group">
             <label for="productName">Product Name</label>
-            <input type="text" class="form-control" id="productName" name="productName" [(ngModel)]="productName" readonly>
+            <input type="text" class="form-control" id="productName" name="productName" [(ngModel)]="productName"
+              readonly>
           </div>
           <div class="form-group">
             <label for="color">Color</label>
@@ -71,15 +85,47 @@
           </div>
           <div class="form-group">
             <label for="quantity">Quantity</label>
-            <input type="number" class="form-control" id="quantity" name="quantity" [(ngModel)]="quantity" required min="1">
+            <input type="number" class="form-control" id="quantity" name="quantity" [(ngModel)]="quantity" required
+              min="1">
           </div>
           <div class="form-group">
             <label for="totalAmount">Total Amount</label>
-            <input type="text" class="form-control" id="totalAmount" name="totalAmount" [(ngModel)]="price*quantity" readonly>
+            <input type="text" class="form-control" id="totalAmount" name="totalAmount" [(ngModel)]="price*quantity"
+              readonly>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
             <button type="submit" class="btn btn-primary" [disabled]="!quantity">Add to Cart</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal for updateProduct form -->
+<div class="modal" tabindex="-1" [class.show]="showModalforupdate" [class.d-block]="showModalforupdate">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="title">Update Product</h5>
+        <button type="button" class="close" (click)="closeModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="submitUpdateProduct()">
+          <div class="form-group">
+            <label for="quantity">Add Quantity</label>
+            <input type="text" class="form-control" id="addQuantity" name="addQuantity" [(ngModel)]="addQuantity">
+          </div>
+          <div class="form-group">
+            <label for="productName">Change Price To</label>
+            <input type="text" class="form-control" id="changePriceTo" name="changePriceTo" [(ngModel)]="changePriceTo">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
+            <button type="submit" class="btn btn-primary" [disabled]="!changePriceTo">Update</button>
           </div>
         </form>
       </div>

@@ -35,6 +35,13 @@
       flex-basis: 50%;
       max-width: 50%;
     }
+    .text{
+      font-size: smaller;
+      height: 40px;
+      width: 90px;
+      padding: 2px;
+      min-width: 60px;
+    }
   }
 
   .navbar {
@@ -61,7 +68,7 @@
   }
 
   h4{
-    /* margin: auto; */
+    
     color: darkblue;
   }
 
@@ -99,6 +106,7 @@
     color: #fff;
     border: none;
     cursor: pointer;
+    margin: 4px;
   }
   
   button:disabled {

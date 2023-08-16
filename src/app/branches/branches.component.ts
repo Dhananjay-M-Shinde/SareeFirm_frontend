@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { BranchDataService } from '../services/branch-data.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { UserDataService } from '../services/user-data.service';
 
 @Component({
   selector: 'app-branches',
@@ -26,7 +28,7 @@ export class BranchesComponent {
   updateDetailsForm!: FormGroup;
   BranchId: number | undefined;
 
-  constructor(private branchService: BranchDataService, private formBuilder:FormBuilder){}
+  constructor(private branchService: BranchDataService, private formBuilder:FormBuilder, private router:Router, private userDataService:UserDataService){}
 
   ngOnInit() {
     this.getBranchData();
@@ -170,6 +172,13 @@ export class BranchesComponent {
     }, (error) =>{
       this.errormsg = "details not updated"
     })
+  }
+
+  toBranchInventory(branchId:number){
+    console.log("hii");
+    console.log(branchId);
+    this.userDataService.Branch_Id = branchId;
+    this.router.navigate(['/branchInventory/'+branchId]);
   }
 
 }

@@ -14,4 +14,9 @@ export class InventoryService {
   getInventoryByid(id:any):Observable<any>{
     return this.http.get(`${this.apiUrl}/products/`+id);
   }
+
+  updateProduct(branchId:any, productId:any, color:any, updationData:any){
+    // updateProduct/:branch_id/:product_id/:color
+    return this.http.put<any>(`${this.apiUrl}/products/updateProduct/${branchId}/${productId}/${color}`, updationData)
+  }
 }
