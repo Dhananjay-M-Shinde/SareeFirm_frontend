@@ -51,6 +51,7 @@ export class BranchesComponent {
       Address: ['', Validators.required],
       Email: ['', Validators.required]
     })
+    
   }
 
   getBranchData(){

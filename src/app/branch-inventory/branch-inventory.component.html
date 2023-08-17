@@ -5,21 +5,26 @@
     <button class="btn btn-primary">Search</button>
   </div>
   <div class="cart-icon">
-    <button class="btn btn-primary" *ngIf="userType == 'MainOwner'">newProduct</button>
+    <button class="btn btn-primary" (click)="addNewProduct()" *ngIf="userType == 'MainOwner'">newProduct</button>
   </div>
   <div class="cart-icon" *ngIf="userType == 'BranchOwner'">
     <i class="fas fa-shopping-cart" routerLink="/CartComponent"></i>
     <span class="cart-count" [innerText]="cartItemCount"></span>
+    
   </div>
 </div>
 
 
 <div *ngFor="let product of productData">
   <div class="common-details">
-    <div class="row">
-      <div class="col-md-6"><h2 style="color: chocolate;">{{ product.Product_name }}</h2></div>
-      <div class="col-md-6"><span><a href="#" class="btn btn-danger">Add New Varient</a></span></div>
-    </div>
+    <div class="row row-md">
+      <div class="col-md-6">
+          <div class="row">
+              <div class="col-8 col-md-12"><h2 style="color: chocolate;">{{ product.Product_name }}</h2></div>
+              <span class="col-4 col-md-12"><a href="#" class="btn btn-danger smbtn">Add New Variant</a></span>
+          </div>
+      </div>
+    </div>  
     <p style="color: darkgreen;">{{ product.Description }}</p>
     <p>Fabric: {{ product.Fabric }}</p>
     <p>Price Range: {{ product.Price_range }}</p>
@@ -132,3 +137,54 @@
     </div>
   </div>
 </div>
+
+
+<!-- modal for adding new product -->
+
+<div class="modal fade" tabindex="-1" [class.show]="showModalfornewproduct" [class.d-block]="showModalfornewproduct">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addProductModalLabel">Add New Product</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="productForm" (ngSubmit)="saveProduct()">
+          <div class="mb-3">
+            <label for="product_name" class="form-label">Product Name</label>
+            <input type="text" id="product_name" formControlName="product_name" class="form-control">
+          </div>
+          <!-- Other input fields for product properties -->
+
+          <div formArrayName="variants">
+            <div *ngFor="let variant of variantsArray().controls; let i = index" class="border p-3 my-2">
+              <h6>Variant {{ i + 1 }}</h6>
+              <div [formGroupName]="i">
+                <div class="mb-3">
+                  <label for="color" class="form-label">Color</label>
+                  <input type="text" id="color" formControlName="color" class="form-control">
+                </div>
+                <!-- Other input fields for variant properties -->
+              </div>
+            </div>
+          </div>
+          
+          <div class="text-center">
+            <button type="button" (click)="addVariant()" class="btn btn-sm btn-warning mt-2">Add Variant</button>
+          </div>
+          
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-success">Save Product</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProductModal">
+  Add New Product
+</button>
+
+

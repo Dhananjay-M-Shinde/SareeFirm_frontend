@@ -216,11 +216,18 @@ body {
 }
 
 /* Hide .navbar-brand on small screens */
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 670px) {
   .navbar-brand {
     display: none;
   }
-  
+  .smbtn{
+    max-height: 80px;
+    /* min-height: 30px; */
+    max-width: 120px;
+    font-size: smaller;
+    padding: 2px;
+  }
+
 }
 
 

@@ -3,6 +3,7 @@ import { InventoryService } from '../services/inventory.service';
 import { CartService } from '../services/cart.service';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { UserDataService } from '../services/user-data.service';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 
 
 @Component({
@@ -13,8 +14,10 @@ import { UserDataService } from '../services/user-data.service';
 
 export class BranchInventoryComponent implements OnInit {
 
+  productForm!: FormGroup;
   showModal: boolean = false;
   showModalforupdate:boolean = false;
+  showModalfornewproduct:boolean = false;
   productDatas: any = {}; // You can initialize it with empty object or set it when you receive data from the frontend
   userType:string | undefined;
   updateProduct: any = {};
@@ -37,8 +40,16 @@ export class BranchInventoryComponent implements OnInit {
   changePriceTo:number = 0;
 
   cartItemCount: number = 0; // Initialize cart item count
+  productData: any[] = [];
 
-  constructor(private inventory: InventoryService, private cartService: CartService, private router:Router, private route:ActivatedRoute, private userData:UserDataService) {}
+  constructor(private inventory: InventoryService, private cartService: CartService, private router:Router, private route:ActivatedRoute, private userData:UserDataService, private fb: FormBuilder) {
+    this.productForm = this.fb.group({
+      product_name: [''],
+      // Other product properties
+      
+      variants: this.fb.array([this.getVariantFields()]),
+    });
+  }
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
@@ -53,7 +64,7 @@ export class BranchInventoryComponent implements OnInit {
     this.userType = this.userData.userType;
   }
 
-  productData: any[] = [];
+  
   getInventory(branchId:any) {
     let id = 0;
 
@@ -73,8 +84,8 @@ export class BranchInventoryComponent implements OnInit {
     this.color = color;
     this.price = price;
     this.branchId = 1;
-    this.showModal = true;
     this.quantity = 1;
+    this.showModal = true;
   }
 
   onSubmit(): void {
@@ -135,5 +146,35 @@ export class BranchInventoryComponent implements OnInit {
       this.closeModal();
       this.getInventory(this.BranchId);
     }, 2000);
+  }
+
+  addNewProduct(){
+    this.showModalfornewproduct = true;
+  }
+
+  getVariantFields(): FormGroup {
+    return this.fb.group({
+      color: [''],
+      // Other variant properties
+    });
+  }
+
+  variantsArray() {
+    return this.productForm.get('variants') as FormArray;
+  }
+
+  addVariant() {
+    this.variantsArray().push(this.getVariantFields());
+  }
+
+  removeVariant(i: number) {
+    this.variantsArray().removeAt(i);
+  }
+
+  saveProduct() {
+    // Implement your logic to save the product data
+    const productData = this.productForm.value;
+    console.log(productData);
+    // Call API or perform other operations to save the data
   }
 }

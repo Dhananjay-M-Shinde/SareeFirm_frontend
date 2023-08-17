@@ -20,6 +20,7 @@ import { FormsModule } from '@angular/forms';
 import { CartComponent } from './cart/cart.component';
 import { CartIconComponent } from './cart-icon/cart-icon.component';
 import { BranchesComponent } from './branches/branches.component';
+import { DynamicFieldsComponent } from './dynamic-fields/dynamic-fields.component';
 // import { CarouselComponent } from './carousel/carousel.component';
 
 // import { MatIconModule } from '@angular/material/icon';
@@ -34,7 +35,8 @@ import { BranchesComponent } from './branches/branches.component';
     BranchInventoryComponent,
     CartComponent,
     CartIconComponent,
-    BranchesComponent
+    BranchesComponent,
+    DynamicFieldsComponent
   ],
   imports: [
     BrowserModule,
