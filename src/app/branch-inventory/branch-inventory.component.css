@@ -230,4 +230,21 @@ body {
 
 }
 
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+/* Styles for the input field */
+.form-control {
+  font-size: 16px; /* Set the font size for the input text */
+}
+
+/* Styles for the placeholder */
+.form-control::placeholder {
+  font-size: 12px; /* Set a smaller font size for the placeholder */
+  color: #999; /* Set a color for the placeholder */
+}
+
 

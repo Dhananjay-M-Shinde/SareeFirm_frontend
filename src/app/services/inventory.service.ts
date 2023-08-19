@@ -19,4 +19,12 @@ export class InventoryService {
     // updateProduct/:branch_id/:product_id/:color
     return this.http.put<any>(`${this.apiUrl}/products/updateProduct/${branchId}/${productId}/${color}`, updationData)
   }
+
+  addNewProduct(product:any){
+    return this.http.post<any>(`${this.apiUrl}/products/newProduct`, product);
+  }
+
+  addNewVariant(productId:any, branchId:any, variant:any){
+    return this.http.put<any>(`${this.apiUrl}/products/addVarient/${productId}/${branchId}`, variant);
+  }
 }

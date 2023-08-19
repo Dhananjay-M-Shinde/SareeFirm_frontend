@@ -3,14 +3,14 @@
   <div class="navbar-search">
     <input type="text" class="search-input" placeholder="Search...">
     <button class="btn btn-primary">Search</button>
-  </div>
+  </div> 
   <div class="cart-icon">
     <button class="btn btn-primary" (click)="addNewProduct()" *ngIf="userType == 'MainOwner'">newProduct</button>
   </div>
   <div class="cart-icon" *ngIf="userType == 'BranchOwner'">
     <i class="fas fa-shopping-cart" routerLink="/CartComponent"></i>
     <span class="cart-count" [innerText]="cartItemCount"></span>
-    
+
   </div>
 </div>
 
@@ -21,7 +21,7 @@
       <div class="col-md-6">
           <div class="row">
               <div class="col-8 col-md-12"><h2 style="color: chocolate;">{{ product.Product_name }}</h2></div>
-              <span class="col-4 col-md-12"><a href="#" class="btn btn-danger smbtn">Add New Variant</a></span>
+              <span class="col-4 col-md-12"><a class="btn btn-danger smbtn" *ngIf="userType == 'MainOwner'" (click)="newVariantModal(product.Product_Id)">Add New Variant</a></span>
           </div>
       </div>
     </div>  
@@ -141,30 +141,100 @@
 
 <!-- modal for adding new product -->
 
-<div class="modal fade" tabindex="-1" [class.show]="showModalfornewproduct" [class.d-block]="showModalfornewproduct">
+<div class="modal" tabindex="-1" [class.show]="showModalfornewproduct" [class.d-block]="showModalfornewproduct">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="addProductModalLabel">Add New Product</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="close" (click)="closeModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
       <div class="modal-body">
         <form [formGroup]="productForm" (ngSubmit)="saveProduct()">
           <div class="mb-3">
-            <label for="product_name" class="form-label">Product Name</label>
-            <input type="text" id="product_name" formControlName="product_name" class="form-control">
+            <label for="Product_Id" class="form-label">Product Id</label>
+            <input type="number" id="Product_Id" formControlName="Product_Id" class="form-control">
+            <div *ngIf="productForm.get('Product_Id')?.hasError('required') && productForm.get('Product_Id')?.touched" class="text-danger">
+              Product Id is required.
+            </div>
           </div>
-          <!-- Other input fields for product properties -->
+          <div class="mb-3">
+            <label for="Branch_Id" class="form-label">Branch Id</label>
+            <input type="number" id="Branch_Id" formControlName="Branch_Id" class="form-control">
+            <div *ngIf="productForm.get('Branch_Id')?.hasError('required') && productForm.get('Branch_Id')?.touched" class="text-danger">
+              Branch Id is required.
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="Product_name" class="form-label">Product Name</label>
+            <input type="text" id="Product_name" formControlName="Product_name" class="form-control">
+            <div *ngIf="productForm.get('Product_name')?.hasError('required') && productForm.get('Product_name')?.touched" class="text-danger">
+              Product Name is required.
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="Description" class="form-label">Description</label>
+            <input type="text" id="Description" formControlName="Description" class="form-control">
+            <div *ngIf="productForm.get('Description')?.hasError('required') && productForm.get('Product_Id')?.touched" class="text-danger">
+              Description is required.
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="Fabric" class="form-label">Fabric</label>
+            <input type="text" id="Fabric" formControlName="Fabric" class="form-control">
+            <div *ngIf="productForm.get('Fabric')?.hasError('required') && productForm.get('Fabric')?.touched" class="text-danger">
+              Fabric type is required.
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="Price_range" class="form-label">Price_range</label>
+            <input type="text" id="Price_range" formControlName="Price_range" class="form-control">
+            <div *ngIf="productForm.get('Price_range')?.hasError('required') && productForm.get('Price_range')?.touched" class="text-danger">
+              Price_range is required.
+            </div>
+          </div>
 
-          <div formArrayName="variants">
+          <div formArrayName="Varients">
             <div *ngFor="let variant of variantsArray().controls; let i = index" class="border p-3 my-2">
               <h6>Variant {{ i + 1 }}</h6>
               <div [formGroupName]="i">
                 <div class="mb-3">
-                  <label for="color" class="form-label">Color</label>
-                  <input type="text" id="color" formControlName="color" class="form-control">
+                  <label for="Color" class="form-label">Color</label>
+                  <input type="text" id="Color" formControlName="Color" class="form-control">
+                  <div *ngIf="productForm.get('Fabric')?.hasError('required') && productForm.get('Fabric')?.touched" class="text-danger">
+                    Color is required.
+                  </div>
                 </div>
-                <!-- Other input fields for variant properties -->
+                <div class="mb-3">
+                  <label for="Price" class="form-label">Price</label>
+                  <input type="number" id="Price" formControlName="Price" class="form-control">
+                  <div *ngIf="productForm.get('Fabric')?.hasError('required') && productForm.get('Fabric')?.touched" class="text-danger">
+                    Price is required.
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label for="Design" class="form-label">Design</label>
+                  <input type="text" id="Design" formControlName="Design" class="form-control">
+                  <div *ngIf="productForm.get('Design')?.hasError('required') && productForm.get('Design')?.touched" class="text-danger">
+                    Design is required.
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label for="Image" class="form-label">Image</label>
+                  <input type="text" id="Image" formControlName="Image" class="form-control">
+                  <div *ngIf="productForm.get('Image')?.hasError('required') && productForm.get('Image')?.touched" class="text-danger">
+                    Image url is required.
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label for="Quantity_Available" class="form-label">Quantity_Available</label>
+                  <input type="number" id="Quantity_Available" formControlName="Quantity_Available" class="form-control">
+                  <div *ngIf="productForm.get('Quantity_Available')?.hasError('required') && productForm.get('Quantity_Available')?.touched" class="text-danger">
+                    Quantity_Available is required.
+                  </div>
+                </div>
+                
               </div>
             </div>
           </div>
@@ -183,8 +253,60 @@
   </div>
 </div>
 
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProductModal">
-  Add New Product
-</button>
+
+<!-- modal for adding new variant to product -->
+
+<div class="modal" tabindex="-1" [class.show]="showModalfornewVariant" [class.d-block]="showModalfornewVariant">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addProductModalLabel">Add New Product</h5>
+        <button type="button" class="close" (click)="closeModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="variantForm" (ngSubmit)="newVariant()">
+          <div class="form-group">
+            <label for="Color" class="form-label">Color</label>
+            <input type="text" id="Color" formControlName="Color" class="form-control" placeholder="Enter saree color">
+            <div class="error-message" *ngIf="variantForm.get('Color')?.hasError('required') && variantForm.get('Color')?.touched">Color is required</div>
+          </div>
+          <div class="form-group">
+            <label for="Price" class="form-label">Price</label>
+            <input type="text" id="Price" formControlName="Price" class="form-control" placeholder="Enter saree Price">
+            <div class="error-message" *ngIf="variantForm.get('Price')?.hasError('required') && variantForm.get('Price')?.touched">Price is required</div>
+          </div>
+          <div class="form-group">
+            <label for="Design" class="form-label">Design</label>
+            <input type="text" id="Design" formControlName="Design" class="form-control" placeholder="Enter saree Design">
+            <div class="error-message" *ngIf="variantForm.get('Design')?.hasError('required') && variantForm.get('Design')?.touched">Design is required</div>
+          </div>
+          <div class="form-group">
+            <label for="Image" class="form-label">Image url</label>
+            <input type="text" id="Image" formControlName="Image" class="form-control" placeholder="Enter saree Image url">
+            <div class="error-message" *ngIf="variantForm.get('Image')?.hasError('required') && variantForm.get('Image')?.touched">Image url is required</div>
+          </div>
+          <div class="form-group">
+            <label for="Quantity_Available" class="form-label">Quantity_Available</label>
+            <input type="text" id="Quantity_Available" formControlName="Quantity_Available" class="form-control" placeholder="Enter saree Quantity_Available">
+            <div class="error-message" *ngIf="variantForm.get('Quantity_Available')?.hasError('required') && variantForm.get('Quantity_Available')?.touched">Quantity_Available is required</div>
+          </div>
+          <!-- Repeat similar structure for other form fields -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="closeModal()">Close</button>
+            <button type="submit" class="btn btn-success">Add Variant</button>
+          </div>
+        </form>
+        <div>
+          <span class="text text-success" *ngIf="successMsg">{{successMsg}}</span>
+          <span class="text text-danger" *ngIf="errorMsg">{{errorMsg}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 
 
