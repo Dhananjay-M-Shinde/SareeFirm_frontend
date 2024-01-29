@@ -3,6 +3,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
+  background-color: #212121;
 }
 
 .homepage-container {
@@ -11,7 +12,8 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: url('src/assets/images/disney.PNG');
+  /* background: url('src/assets/images/disney.PNG'); */
+  background-color: #212121;
   background-size: cover;
   color: #ffffff;
   padding: 20px;
@@ -48,13 +50,19 @@ p {
 
 .login-link {
   display: block;
-  color: lightyellow;
-  background-color: #333;
-  padding: 10px 20px;
-  margin-bottom: 10px;
-  text-decoration: none;
+  height: 40px;
+  width: 200px;
+  padding-top: 4%;
+}
+
+.brO{
+  margin-top: 20px;
+}
+
+.btns{
   border-radius: 5px;
-  font-weight: bold;
+  background-color: rgb(8, 8, 118);
+  color: white;
 }
 
 /* Media queries for responsiveness */
